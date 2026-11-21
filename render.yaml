@@ -1,0 +1,33 @@
+# Render Blueprint: GitHubにこのフォルダをpush → Render「New > Blueprint」で読み込む
+services:
+  - type: web
+    name: kokowozibunndekimetai        # → https://kokowozibunndekimetai.onrender.com
+    runtime: node
+    plan: free
+    region: singapore                  # 日本から近い。変更可
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # ↓ 値はRenderのダッシュボードで入力（sync: false = gitに書かない）
+      - key: GROQ_KEY
+        sync: false
+      - key: OPENROUTER_KEY
+        sync: false
+      - key: TAVILY_KEY
+        sync: false
+      - key: EXA_KEY                   # 任意: 検索のフォールバック
+        sync: false
+      - key: AGENTP_API_KEYS           # 任意: 公開API用（長いランダム文字列。カンマ区切りで複数可）
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL    # 任意: 上限カウンタを再起動後も保持（推奨）
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: CF_ACCOUNT_ID             # 任意: 画像生成（Cloudflare Workers AI）
+        sync: false
+      - key: CF_API_TOKEN
+        sync: false
